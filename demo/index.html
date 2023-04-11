@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Optimizing images on the client side - SiteLint</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="SiteLint">
+  <meta name="description" content="Optimizing images before upload on the client side">
+  <meta name="keywords" content="images, optimizing">
+
+  <link rel="icon" href="https://www.sitelint.com/wp-content/themes/sitelint/assets/images/favicon.ico" sizes="any">
+  <link rel="icon" href="https://www.sitelint.com/wp-content/themes/sitelint/assets/images/favicon.svg"
+    type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: #fff;
+      color: #000;
+      font-family: Inter, "Helvetica Neue", "Segoe UI", Helvetica, Arial, "Lucida Grande", sans-serif;
+      font-weight: 400;
+      font-size: 1em;
+      line-height: 1.45em;
+      padding: 0 1em 1em 1em;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: #333;
+      font-family: Inter, "Helvetica Neue Light", "Helvetica Neue", "Segoe UI", Helvetica, Arial, "Lucida Grande", sans-serif;
+      font-weight: 200;
+      margin: 0.5em 0;
+      letter-spacing: -0.024em;
+      line-height: 0.9em;
+    }
+
+    h1 {
+      font-size: 52px;
+    }
+
+    h2 {
+      font-size: 32px;
+    }
+
+    ol,
+    pre,
+    p {
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0 0 0 1.5rem;
+    }
+
+    @media (max-width: 575.98px) {
+      h1 {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Optimize image on the client side</h1>
+  </header>
+  <main>
+
+    <div class="mb-4">
+      <label for="files_input">Select images</label>
+      <input type="file" id="files_input" multiple />
+    </div>
+
+    <ul id="results" class="mb-4"></ul>
+  </main>
+
+  <footer>© 2023 <a href="https://www.sitelint.com/">Sitelint</a></footer>
+
+    <script>
+      (function () {
+        const head = document.head;
+
+        const loadOptimizeImagePackage = () => {
+          const script = document.createElement('script');
+
+          script.src = 'optimize-image-on-the-client-side.js?c=' + new Date().getTime();
+          script.type = 'text/javascript';
+          script.async = true;
+
+          script.onload = () => {
+            const optimizeImage = new globalThis.sitelint.OptimizeImage();
+            const onCompressionDone = (filesBeforeCompression, filesAfterCompression) => {
+              const results = document.querySelector('#results');
+              const beforeCompression = Array.from(filesBeforeCompression);
+              const afterCompression = Array.from(filesAfterCompression);
+
+              for (const index in beforeCompression) {
+                results.insertAdjacentHTML('beforeend', `<li>File: <code>${beforeCompression[index].name}</code>, before: ${beforeCompression[index].size}, after: ${afterCompression[index].size}</li>`);
+              }
+            };
+
+            optimizeImage.install(undefined, onCompressionDone);
+          };
+
+          head.insertBefore(script, head.firstChild);
+        };
+
+        if (typeof document.readyState === 'string' && document.readyState === 'complete') {
+          loadOptimizeImagePackage();
+        } else {
+          document.addEventListener('DOMContentLoaded', loadOptimizeImagePackage, true);
+        }
+
+        // Google Analytics
+        const loadGTM = () => {
+          const gtmScript = document.createElement('script');
+
+          gtmScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-JTTSY0KNFH';
+          gtmScript.type = 'text/javascript';
+          gtmScript.async = true;
+
+          gtmScript.onload = () => {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-JTTSY0KNFH');
+          };
+
+          head.insertBefore(gtmScript, head.firstChild);
+        };
+
+        let url = new URL(window.location.href);
+
+        if (url.protocol !== 'file:') {
+          loadGTM();
+        }
+      }())
+    </script>
+</body>
+
+</html>
