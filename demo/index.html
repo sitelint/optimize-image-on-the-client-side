@@ -81,7 +81,17 @@
       <input type="file" id="files_input" multiple />
     </div>
 
-    <ul id="results" class="mb-4"></ul>
+    <table id="results" class="table mb-4 caption-top">
+      <caption class="visually-hidden">Results</caption>
+      <thead>
+        <tr>
+          <th scope="col">Filename</th>
+          <th scope="col">Before</th>
+          <th scope="col">After</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
   </main>
 
   <footer>© 2023 <a href="https://www.sitelint.com/">Sitelint</a></footer>
@@ -100,12 +110,12 @@
           script.onload = () => {
             const optimizeImage = new globalThis.sitelint.OptimizeImage();
             const onCompressionDone = (filesBeforeCompression, filesAfterCompression) => {
-              const results = document.querySelector('#results');
+              const results = document.querySelector('#results tbody');
               const beforeCompression = Array.from(filesBeforeCompression);
               const afterCompression = Array.from(filesAfterCompression);
 
               for (const index in beforeCompression) {
-                results.insertAdjacentHTML('beforeend', `<li>File: <code>${beforeCompression[index].name}</code>, before: ${beforeCompression[index].size}, after: ${afterCompression[index].size}</li>`);
+                results.insertAdjacentHTML('beforeend', `<tr><td><code>${beforeCompression[index].name}</code></td><td>${beforeCompression[index].size}</td><td>${afterCompression[index].size}</td></tr>`);
               }
             };
 
