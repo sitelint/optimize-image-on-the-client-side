@@ -44,6 +44,8 @@ jsdelivr.com comment:
 
 ```JavaScript
   const optimizeImage = new globalThis.sitelint.OptimizeImage();
+
+  optimizeImage.install();
 ```
 
 ## Technical
