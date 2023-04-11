@@ -95,7 +95,11 @@ export class OptimizeImage {
       const compressedFile: File | null = await this.compressImage(file, compressOptions);
 
       if (compressedFile instanceof File) {
-        dataTransfer.items.add(compressedFile);
+        if (compressedFile.size < file.size) {
+          dataTransfer.items.add(compressedFile);
+        } else {
+          dataTransfer.items.add(file);
+        }
       }
     }
 
