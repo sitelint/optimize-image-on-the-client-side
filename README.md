@@ -17,11 +17,12 @@ npm install @sitelintcode/optimize-image-on-the-client-side --save
 ### Browser environment
 
 ```Html
-  <script src="https://cdn.jsdelivr.net/npm/@sitelintcode/optimize-image-on-the-client-side@0.0.3/dist/optimize-image-on-the-client-side.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@sitelintcode/optimize-image-on-the-client-side@0.0.10/dist/optimize-image-on-the-client-side.js"></script>
 ```
 
 #### Notes
-See **0.0.3** version. Don't forget to set desired version. You may check releases: https://github.com/sitelint/optimize-image-on-the-client-side/releases
+
+See **0.0.10** version. Don't forget to set desired version. You may check releases: https://github.com/sitelint/optimize-image-on-the-client-side/releases
 
 jsdelivr.com comment:
 
@@ -42,10 +43,14 @@ jsdelivr.com comment:
 
 ## Browser environment
 
-```JavaScript
-  const optimizeImage = new globalThis.sitelint.OptimizeImage();
-
+```HTML
+<script src="https://cdn.jsdelivr.net/npm/@sitelintcode/optimize-image-on-the-client-side@0.0.10/dist/optimize-image-on-the-client-side.js"></script>
+<script>
+(function() {
+  const optimizeImage = new window.sitelint.OptimizeImage();
   optimizeImage.install();
+}())
+</script>
 ```
 
 ## Technical
