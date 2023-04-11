@@ -1,4 +1,5 @@
 import { ICanvasCompressOptions } from './interfaces/optimize-image-on-the-client-side.interfaces';
+import { CommonUtilities } from './utilities/common.utilities';
 
 export class OptimizeImage {
   private inputTypeFileHandlerReference: ((event: Event) => void) | null;
@@ -52,6 +53,10 @@ export class OptimizeImage {
       return;
     }
 
+    const originalCursor: string | undefined = CommonUtilities.getComputedStyle(document.body)?.getPropertyValue('cursor');
+
+    document.body.style.cursor = 'progress';
+
     const allowedImagesType: string[] = [
       'image/jpeg',
       'image/png',
@@ -104,6 +109,10 @@ export class OptimizeImage {
     }
 
     (event.target as HTMLInputElement).files = dataTransfer.files;
+
+    if (typeof originalCursor === 'string') {
+      document.body.style.cursor = originalCursor;
+    }
 
     if (typeof this.onCompressionDoneCallback === 'function') {
       this.onCompressionDoneCallback(files, dataTransfer.files);
