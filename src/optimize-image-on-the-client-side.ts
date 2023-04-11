@@ -145,7 +145,7 @@ export class OptimizeImage {
     document.removeEventListener('change', this.inputTypeFileHandlerReference);
   }
 
-  public install(cssQuerySelector: string | undefined, onCompressionDoneCallback?: Function): void {
+  public install(cssQuerySelector?: string | undefined, onCompressionDoneCallback?: Function): void {
     this.inputTypeFileHandlerReference = this.handleChangeEvent.bind(this);
 
     this.onCompressionDoneCallback = onCompressionDoneCallback;

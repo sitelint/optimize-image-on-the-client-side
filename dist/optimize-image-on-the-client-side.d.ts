@@ -8,7 +8,7 @@ declare class OptimizeImage {
     private handleChangeEvent;
     addImageOptimization(cssQuerySelector: string): void;
     uninstall(): void;
-    install(cssQuerySelector: string | undefined, onCompressionDoneCallback?: Function): void;
+    install(cssQuerySelector?: string | undefined, onCompressionDoneCallback?: Function): void;
 }
 
 export { OptimizeImage };

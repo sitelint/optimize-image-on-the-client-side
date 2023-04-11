@@ -33,7 +33,7 @@ jsdelivr.com comment:
 ## TypeScript
 
 ```TypeScript
-  import OptimizeImage from '@sitelint/optimize-image-on-the-client-side';
+  import { OptimizeImage } from '@sitelintcode/optimize-image-on-the-client-side';
 
   const optimizeImage: OptimizeImage = new OptimizeImage();
 
