@@ -17,10 +17,10 @@ npm install @sitelintcode/optimize-image-on-the-client-side --save
 ### Browser environment
 
 ```Html
-  <script src="https://cdn.jsdelivr.net/npm/@sitelintcode/optimize-image-on-the-client-side@0.0.2/dist/optimize-image-on-the-client-side.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@sitelintcode/optimize-image-on-the-client-side@0.0.3/dist/optimize-image-on-the-client-side.js"></script>
 ```
 
-Note: see **0.0.2** version. Don't forget to set desired version.
+Note: see **0.0.3** version. Don't forget to set desired version.
 
 2. Usage:
 
