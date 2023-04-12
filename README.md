@@ -14,37 +14,20 @@ Optimize image after selecting using `<input type="file">`.
 npm install @sitelintcode/optimize-image-on-the-client-side --save
 ```
 
-### Browser environment
-
-```Html
-  <script src="https://cdn.jsdelivr.net/npm/@sitelintcode/optimize-image-on-the-client-side@0.0.10/dist/optimize-image-on-the-client-side.js"></script>
-```
-
-#### Notes
-
-See **0.0.10** version. Don't forget to set desired version. You may check releases: https://github.com/sitelint/optimize-image-on-the-client-side/releases
-
-jsdelivr.com comment:
-
-> // omit the version completely to get the latest one
-  // you should NOT use this in production
-
-2. Usage:
-
 ## TypeScript
 
 ```TypeScript
-  import { OptimizeImage } from '@sitelintcode/optimize-image-on-the-client-side';
+import { OptimizeImage } from '@sitelintcode/optimize-image-on-the-client-side';
 
-  const optimizeImage: OptimizeImage = new OptimizeImage();
+const optimizeImage: OptimizeImage = new OptimizeImage();
 
-  optimizeImage.install();
+optimizeImage.install();
 ```
 
 ## Browser environment
 
 ```HTML
-<script src="https://cdn.jsdelivr.net/npm/@sitelintcode/optimize-image-on-the-client-side@0.0.10/dist/optimize-image-on-the-client-side.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@sitelintcode/optimize-image-on-the-client-side@0.0.13/dist/optimize-image-on-the-client-side.js"></script>
 <script>
 (function() {
   const optimizeImage = new window.sitelint.OptimizeImage();
@@ -52,6 +35,15 @@ jsdelivr.com comment:
 }())
 </script>
 ```
+
+### Notes
+
+See **0.0.13** version. Don't forget to set desired version. You may check releases: https://github.com/sitelint/optimize-image-on-the-client-side/releases
+
+jsdelivr.com comment:
+
+> // omit the version completely to get the latest one
+  // you should NOT use this in production
 
 ## Technical
 
