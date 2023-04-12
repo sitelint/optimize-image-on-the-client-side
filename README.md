@@ -1,6 +1,8 @@
 # Optimize image on the client side
 
-Optimize image after selecting using `<input type="file">`.
+Optimize image after selecting using `<input type="file">`. The optimization process takes place in the background and it's done automatically.
+
+**Note that images that are larger in size after compression are not taken into account.**
 
 ## Demo
 
