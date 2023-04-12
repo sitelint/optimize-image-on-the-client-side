@@ -41,7 +41,14 @@ export class OptimizeImage {
   }
 
   private async compressImage(file: File, { quality = 1, type = file.type }): Promise<File | null> {
-    const imageBitmap: ImageBitmap = await createImageBitmap(file);
+    let imageBitmap: ImageBitmap;
+
+    try {
+      imageBitmap = await createImageBitmap(file);
+    } catch (e) {
+      return Promise.resolve(null);
+    }
+
     const canvas: HTMLCanvasElement = document.createElement('canvas');
 
     canvas.width = imageBitmap.width;
@@ -55,9 +62,15 @@ export class OptimizeImage {
 
     context.drawImage(imageBitmap, 0, 0);
 
-    const blob: Blob | null = await new Promise((resolve: BlobCallback): void => {
-      return canvas.toBlob(resolve, type, quality);
-    });
+    let blob: Blob | null;
+
+    try {
+      blob = await new Promise((resolve: BlobCallback): void => {
+        return canvas.toBlob(resolve, type, quality);
+      });
+    } catch (e) {
+      return Promise.resolve(null);
+    }
 
     if (blob === null) {
       return Promise.resolve(null);
