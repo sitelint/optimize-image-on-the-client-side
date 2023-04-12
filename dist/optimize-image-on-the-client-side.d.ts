@@ -2,7 +2,11 @@ declare class OptimizeImage {
     private inputTypeFileHandlerReference;
     private customInputElements;
     private onCompressionDoneCallback;
+    private originalCursor;
     constructor();
+    private createCSS;
+    private enableBusyIndicator;
+    private disableBusyIndicator;
     private compressImage;
     private processImages;
     private handleChangeEvent;
