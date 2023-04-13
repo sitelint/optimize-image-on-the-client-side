@@ -8,6 +8,12 @@ Optimize image after selecting using `<input type="file">`. The optimization pro
 
 [Optimize image on the client side](https://www.sitelint.com/lab/optimize-image-on-the-client-side/)
 
+## Benefits
+
+* Faster uploading and downloading data.
+* Reducing memory consumption.
+* Saves the space on the server.
+
 ## Getting started
 
 ### NPM
@@ -29,7 +35,7 @@ optimizeImage.install();
 ## Browser environment
 
 ```HTML
-<script src="https://cdn.jsdelivr.net/npm/@sitelintcode/optimize-image-on-the-client-side@0.0.13/dist/optimize-image-on-the-client-side.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@sitelintcode/optimize-image-on-the-client-side@0.0.16/dist/optimize-image-on-the-client-side.js"></script>
 <script>
 (function() {
   const optimizeImage = new window.sitelint.OptimizeImage();
@@ -40,12 +46,11 @@ optimizeImage.install();
 
 ### Notes
 
-See **0.0.13** version. Don't forget to set desired version. You may check releases: https://github.com/sitelint/optimize-image-on-the-client-side/releases
+See **0.0.16** version. Don't forget to set desired version. You may check releases: https://github.com/sitelint/optimize-image-on-the-client-side/releases
 
-jsdelivr.com comment:
+Worth to mention that [jsdelivr](https://www.jsdelivr.com) suggests:
 
-> // omit the version completely to get the latest one
-  // you should NOT use this in production
+> Omit the version completely or use latest to load the latest one (not recommended for production usage).
 
 ## Technical
 
