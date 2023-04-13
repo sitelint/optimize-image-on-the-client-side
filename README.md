@@ -4,6 +4,11 @@ Optimize image after selecting using `<input type="file">`. The optimization pro
 
 **Note that images that are larger in size after compression are not taken into account.**
 
+## Features
+
+* Compressing by the browser, client-side. No image is sent outside of the browser anywhere.
+* When compression takes more than 1 second then the user will see a busy indicator.
+
 ## Demo
 
 [Optimize image on the client side](https://www.sitelint.com/lab/optimize-image-on-the-client-side/)
@@ -35,7 +40,7 @@ optimizeImage.install();
 ## Browser environment
 
 ```HTML
-<script src="https://cdn.jsdelivr.net/npm/@sitelintcode/optimize-image-on-the-client-side@0.0.16/dist/optimize-image-on-the-client-side.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@sitelintcode/optimize-image-on-the-client-side@0.0.18/dist/optimize-image-on-the-client-side.js"></script>
 <script>
 (function() {
   const optimizeImage = new window.sitelint.OptimizeImage();
@@ -46,7 +51,7 @@ optimizeImage.install();
 
 ### Notes
 
-See **0.0.16** version. Don't forget to set desired version. You may check releases: https://github.com/sitelint/optimize-image-on-the-client-side/releases
+Note the version number in the jsdelivr URL: **0.0.18**. Don't forget to set desired version. You may check releases: https://github.com/sitelint/optimize-image-on-the-client-side/releases
 
 Worth to mention that [jsdelivr](https://www.jsdelivr.com) suggests:
 

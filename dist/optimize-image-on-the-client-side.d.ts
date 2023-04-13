@@ -3,6 +3,7 @@ declare class OptimizeImage {
     private customInputElements;
     private onCompressionDoneCallback;
     private originalCursor;
+    private timeoutId;
     constructor();
     private createCSS;
     private enableBusyIndicator;
