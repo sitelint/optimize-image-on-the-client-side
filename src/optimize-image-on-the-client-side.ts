@@ -201,6 +201,8 @@ export class OptimizeImage {
   }
 
   public uninstall(): void {
+    this.onCompressionDoneCallback = undefined;
+
     if (this.inputTypeFileHandlerReference === null) {
       return;
     }
