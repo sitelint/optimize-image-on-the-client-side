@@ -1,4 +1,7 @@
 /* eslint-disable no-process-env */
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 import typescript from 'rollup-plugin-typescript2';
 import html from 'rollup-plugin-html';
 import json from 'rollup-plugin-json';
@@ -7,6 +10,9 @@ import commonjs from 'rollup-plugin-commonjs';
 import { terser } from 'rollup-plugin-minification';
 import { visualizer } from 'rollup-plugin-visualizer';
 import dts from 'rollup-plugin-dts';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const defaults = {
   compilerOptions: {
@@ -58,7 +64,7 @@ const config = {
       declaration: true,
       exclude: ['*.test*', '**/*.test*', '*.spec*', '**/*.spec*'],
       objectHashIgnoreUnknownHack: false,
-      tsconfig: './tsconfig.json',
+      tsconfig: path.join(__dirname, 'tsconfig.json'),
       tsconfigDefaults: defaults,
       tsconfigOverride: override
     }),

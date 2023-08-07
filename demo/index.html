@@ -172,6 +172,15 @@
         document.addEventListener('DOMContentLoaded', loadOptimizeImagePackage, true);
       }
 
+      // Event change, second
+      const inputFile = document.getElementById('files_input');
+
+      const onSecondInputChange = () => {
+        console.log('onSecondInputChange - this is the log from the next event attached to the input type file.');
+      };
+
+      inputFile.addEventListener('change', onSecondInputChange);
+
       // Google Analytics
       const loadGTM = () => {
         const gtmScript = document.createElement('script');

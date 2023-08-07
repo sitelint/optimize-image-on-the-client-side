@@ -10,11 +10,8 @@
     "importHelpers": true,
     "jsx": "preserve",
     "lib": [
-      "es2017",
-      "es7",
-      "es6",
-      "dom",
-      "DOM.Iterable"
+      "DOM",
+      "ESNext"
     ],
     "mapRoot": "./dist",
     "module": "CommonJS",

@@ -1,3 +1,5 @@
+import '@ungap/global-this';
+
 import { ICanvasCompressOptions } from './interfaces/optimize-image-on-the-client-side.interfaces';
 import { CommonUtilities } from './utilities/common.utilities';
 
@@ -7,6 +9,8 @@ export class OptimizeImage {
   private onCompressionDoneCallback: Function | undefined;
   private originalCursor: string | undefined;
   private timeoutId: number | undefined;
+  private processedEvent: boolean;
+  private busyElementId: string;
 
   constructor() {
     this.inputTypeFileHandlerReference = null;
@@ -14,6 +18,8 @@ export class OptimizeImage {
     this.onCompressionDoneCallback = undefined;
     this.originalCursor = undefined;
     this.timeoutId = undefined;
+    this.processedEvent = false;
+    this.busyElementId = 'sl_busy_indicator';
   }
 
   private createCSS(): void {
@@ -40,13 +46,19 @@ export class OptimizeImage {
   }
 
   private enableBusyIndicator(): void {
-    this.originalCursor = CommonUtilities.getComputedStyle(document.body)?.getPropertyValue('cursor');
+    const bodyStyles: CSSStyleDeclaration | null = CommonUtilities.getComputedStyle(document.body);
+
+    if (bodyStyles === null) {
+      return;
+    }
+
+    this.originalCursor = bodyStyles.getPropertyValue('cursor');
 
     document.body.style.cursor = 'progress';
 
     const busyElement: HTMLDivElement = document.createElement('div');
 
-    busyElement.id = 'sl_busy_indicator';
+    busyElement.id = this.busyElementId;
     busyElement.classList.add('sl-busy-indicator');
     busyElement.insertAdjacentHTML('afterbegin', '<span></span>');
 
@@ -54,13 +66,13 @@ export class OptimizeImage {
   }
 
   private disableBusyIndicator(): void {
-    window.clearTimeout(this.timeoutId);
+    globalThis.clearTimeout(this.timeoutId);
 
     if (typeof this.originalCursor === 'string') {
       document.body.style.cursor = this.originalCursor;
     }
 
-    const busyElement: HTMLDivElement | null = document.querySelector('#sl_busy_indicator');
+    const busyElement: HTMLElement | null = document.getElementById(this.busyElementId);
 
     busyElement?.remove();
   }
@@ -69,7 +81,7 @@ export class OptimizeImage {
     let imageBitmap: ImageBitmap;
 
     try {
-      imageBitmap = await createImageBitmap(file);
+      imageBitmap = await globalThis.createImageBitmap(file);
     } catch (e) {
       return Promise.resolve(null);
     }
@@ -106,13 +118,7 @@ export class OptimizeImage {
     });
   }
 
-  private async processImages(event: Event): Promise<void> {
-    const target: HTMLInputElement | null = (event.target as HTMLInputElement | null);
-
-    if (target === null) {
-      return;
-    }
-
+  private async processImages(event: Event, target: HTMLInputElement): Promise<void> {
     const files: FileList | null = target.files;
 
     if (files === null || files.length === 0) {
@@ -120,7 +126,7 @@ export class OptimizeImage {
     }
 
     // Note: this prevent from showing busy indicator if compression takes < 1s
-    this.timeoutId = window.setTimeout(this.enableBusyIndicator.bind(this), 1000);
+    this.timeoutId = Number(globalThis.setTimeout(this.enableBusyIndicator.bind(this), 1000));
 
     const allowedImagesType: string[] = [
       'image/jpeg',
@@ -144,18 +150,15 @@ export class OptimizeImage {
 
     const dataTransfer: DataTransfer = new DataTransfer();
     const defaultCompressOptions: ICanvasCompressOptions = {
-      quality: 0.5,
+      quality: 0.75,
       type: 'image/jpeg'
     };
 
-    for (const file of files) {
-      if (allowedImagesType.includes(file.type) === false) {
-        continue;
-      }
-
-      if (file.type.startsWith('image') === false) {
+    const processFile = async (file: File): Promise<void> => {
+      if (file.type.startsWith('image') === false || allowedImagesType.includes(file.type) === false) {
         dataTransfer.items.add(file);
-        continue;
+
+        return;
       }
 
       const compressOptions: ICanvasCompressOptions = Object.assign(defaultCompressOptions, {
@@ -171,6 +174,10 @@ export class OptimizeImage {
           dataTransfer.items.add(file);
         }
       }
+    };
+
+    for (let i: number = 0, totalFiles: number = files.length; i < totalFiles; i += 1) {
+      await processFile(files[i]);
     }
 
     (event.target as HTMLInputElement).files = dataTransfer.files;
@@ -180,16 +187,35 @@ export class OptimizeImage {
     if (typeof this.onCompressionDoneCallback === 'function') {
       this.onCompressionDoneCallback(files, dataTransfer.files);
     }
+
+    target.disabled = false;
+
+    // Uncaught (in promise) DOMException: Failed to execute 'dispatchEvent' on 'EventTarget': The event is already being dispatched.
+    try {
+      target.dispatchEvent(event);
+    } catch (e) {
+      // silence
+    }
+
+    this.processedEvent = false;
   }
 
   private handleChangeEvent(event: Event): void {
     const target: HTMLInputElement | null = event.target as HTMLInputElement;
 
-    if (target.nodeName.toLowerCase() !== 'input' && target.type === 'file' && event.type !== 'change') {
+    if (this.processedEvent || target === null || target.nodeName.toLowerCase() !== 'input' && target.type === 'file' && event.type !== 'change') {
       return;
     }
 
-    this.processImages(event);
+    if (event.eventPhase === 1) {
+      this.processedEvent = true;
+    }
+
+    event.stopPropagation();
+
+    target.disabled = true;
+
+    this.processImages(event, target);
   }
 
   public addImageOptimization(cssQuerySelector: string): void {

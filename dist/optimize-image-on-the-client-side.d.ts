@@ -4,6 +4,8 @@ declare class OptimizeImage {
     private onCompressionDoneCallback;
     private originalCursor;
     private timeoutId;
+    private processedEvent;
+    private busyElementId;
     constructor();
     private createCSS;
     private enableBusyIndicator;
