@@ -3,11 +3,11 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Optimizing images on the client side - SiteLint</title>
+  <title>Optimize image on the client side - SiteLint Lab</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="SiteLint">
-  <meta name="description" content="Optimizing images before upload on the client side">
-  <meta name="keywords" content="images, optimizing">
+  <meta name="description" content="JavaScript and optimizing images before upload on the client side.">
+  <meta name="keywords" content="javascript, images, optimizing, upload">
 
   <link rel="icon" href="https://www.sitelint.com/wp-content/themes/sitelint/assets/images/favicon.ico" sizes="any">
   <link rel="icon" href="https://www.sitelint.com/wp-content/themes/sitelint/assets/images/favicon.svg"
@@ -97,6 +97,19 @@
       top: 4px;
     }
 
+    .logo a {
+      border-radius: 3px;
+      display: inline-flex;
+      height: 38px;
+    }
+
+    .logo svg {
+      border-radius: 3px;
+      height: 38px;
+      padding: 1px;
+      width: 110px;
+    }
+
     table tbody tr td:nth-child(1) {
       font-family: monospace;
       font-size: 1rem;
@@ -109,14 +122,34 @@
     <a class="site-skip" href="#main-content">Skip to content</a>
   </nav>
 
-  <header class="container">
-    <h1>Optimize image on the client side</h1>
+  <header class="container logo">
+    <a href="https://www.sitelint.com/" class="mt-4"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"
+        width="372" height="128" viewBox="0 0 372 128">
+        <path fill="#0070d1" d="M0 0h372v128H0Z" style="stroke-width:0.426193" />
+        <path fill="#fff"
+          d="M37.578 79.375Q58.128 80.5 65.402 80.5q1.725 0 2.7-.976 1.05-1.05 1.05-2.775V70h-17.25q-7.874 0-11.474-3.525-3.526-3.6-3.526-11.475v-2.25q0-7.875 3.526-11.4 3.6-3.6 11.474-3.6h26.326v10.5H54.903q-4.5 0-4.5 4.5v1.5q0 4.5 4.5 4.5h13.5q7.35 0 10.8 3.45 3.45 3.45 3.45 10.8v3.75q0 7.35-3.45 10.8-3.45 3.45-10.8 3.45-3.825 0-8.1-.15l-6.9-.3q-7.65-.375-15.825-1.05ZM105.146 52v38.25H92.022V62.125h-5.625V52ZM92.022 37h13.124v10.5H92.022Zm48.399 53.25q-7.276.75-14.251.75-5.1 0-8.175-3.075-3.074-3.075-3.074-8.175V60.625h-4.5V50.5h4.5l1.5-9h11.625v9h9.374v10.125h-9.374v17.25q0 1.126.75 1.875.75.75 1.875.75h9.75zm19.851-31.125q-3 0-3 3v4.125h12.75v-4.125q0-3-3-3zM181.647 89.5q-14.475 1.5-26.25 1.5-5.1 0-8.175-3.075-3.075-3.075-3.075-8.175v-18q0-5.625 3.15-8.775 3.225-3.225 8.85-3.225h15q5.625 0 8.775 3.225 3.225 3.15 3.225 8.774v13.876h-25.875v3q0 1.126.75 1.875.75.75 1.875.75 7.425 0 21.75-1.125zm22.47-9.75h27.375v10.5h-40.875v-52.5h13.5zM252.51 52v38.25h-13.125V62.125h-5.626V52Zm-13.125-15h13.125v10.5h-13.125zm42.773 23.625q-3.975 0-9 1.5V90.25h-13.124V50.5h11.625l.75 3.749q3.525-2.324 7.2-3.375 3.75-1.125 6.3-1.125h3.375q5.1 0 8.175 3.075 3.075 3.076 3.075 8.175v29.25h-13.125v-27q0-1.125-.75-1.875t-1.875-.75zm52.94 29.625q-7.275.75-14.25.75-5.1 0-8.175-3.075-3.075-3.075-3.075-8.175V60.625h-4.5V50.5h4.5l1.5-9h11.624v9h9.375v10.125h-9.375v17.25q0 1.126.75 1.875.75.75 1.875.75h9.75z"
+          style="fill:#fff;stroke-width:0.745486" />
+      </svg><span class="visually-hidden">SiteLint</span></a>
   </header>
 
   <main class="container" id="main-content">
-    <div class="mb-4">
-      <label for="files_input">Select images</label>
-      <input type="file" id="files_input" multiple />
+    <h1>Optimize image on the client side</h1>
+    <p><strong>JavaScript and optimizing images on the client side before upload</strong>. Easy and transparent for the user.</p>
+    <p class="mb-5">Original article: <a href="https://www.sitelint.com/blog/how-to-compress-the-image-on-the-client-side-before-uploading/">How to compress the image on the client side before uploading</a>.</p>
+
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <label for="files_input" class="me-2">Select images</label>
+        <input type="file" id="files_input" multiple />
+        </div>
+      <div class="col-md-5 d-flex justify-content-end align-items-center">
+        <label for="quality" class="me-2">Select quality</label>
+        <input type="range" id="quality" name="quality" min="0" max="1" step="0.05" value="0.75">
+      </div>
+
+      <div class="col-md-1 d-flex justify-content-start">
+        <output id="stepValue"></output>
+      </div>
     </div>
 
     <p class="alert alert-warning">Note that images that are larger in size after compression are not taken into
@@ -140,6 +173,7 @@
   <script>
     (function () {
       const head = document.head;
+      let optimizeImage;
 
       const loadOptimizeImagePackage = () => {
         const script = document.createElement('script');
@@ -149,7 +183,8 @@
         script.async = true;
 
         script.onload = () => {
-          const optimizeImage = new globalThis.sitelint.OptimizeImage();
+          optimizeImage = new globalThis.sitelint.OptimizeImage();
+
           const onCompressionDone = (filesBeforeCompression, filesAfterCompression) => {
             const results = document.querySelector('#results tbody');
             const beforeCompression = Array.from(filesBeforeCompression);
@@ -180,6 +215,16 @@
       };
 
       inputFile.addEventListener('change', onSecondInputChange);
+
+      const stepValue = document.querySelector('#stepValue');
+      const inputQuality = document.querySelector('#quality');
+
+      stepValue.textContent = inputQuality.value;
+
+      inputQuality.addEventListener('input', (event) => {
+        stepValue.textContent = event.target.value;
+        optimizeImage.quality = event.target.value;
+      });
 
       // Google Analytics
       const loadGTM = () => {

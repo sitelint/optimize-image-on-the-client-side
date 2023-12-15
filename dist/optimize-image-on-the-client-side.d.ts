@@ -6,6 +6,7 @@ declare class OptimizeImage {
     private timeoutId;
     private processedEvent;
     private busyElementId;
+    quality: number;
     constructor();
     private createCSS;
     private enableBusyIndicator;
@@ -15,7 +16,7 @@ declare class OptimizeImage {
     private handleChangeEvent;
     addImageOptimization(cssQuerySelector: string): void;
     uninstall(): void;
-    install(cssQuerySelector?: string | undefined, onCompressionDoneCallback?: Function): void;
+    install(cssQuerySelector?: string | undefined, onCompressionDoneCallback?: Function, quality?: number): void;
 }
 
 export { OptimizeImage };

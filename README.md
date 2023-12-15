@@ -1,6 +1,6 @@
 # Optimize image on the client side
 
-Optimize image after selecting using `<input type="file">`. The optimization process takes place in the background and it's done automatically.
+Optimize image after selecting using `<input type="file">`. The optimization process takes place in the background and it's done automatically by listening for changes on all inputs type `file`.
 
 **Note that images that are larger in size after compression are not taken into account.**
 
@@ -37,6 +37,30 @@ const optimizeImage: OptimizeImage = new OptimizeImage();
 optimizeImage.install();
 ```
 
+### Options
+
+**`cssQuerySelector?: string | undefined`** - you can specify here custom CSS selector to find your own `input` type file. By default there is a global `change` event listener that handles all inputs type file.
+
+**`onCompressionDoneCallback?: Function`** - pass callback after compression is done. `const onCompressionDone = (filesBeforeCompression, filesAfterCompression) => {}`;
+
+**`quality: number = 0.75`** - you may change the default quality parameter. Read more about [`quality` paremeter on MDN Docs](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob#quality).
+
+This could be set through `install` method arguments:
+
+```JavaScript
+const optimizeImage = new OptimizeImage();
+
+optimizeImage.install(undefined, undefined, 0.85);
+```
+
+or at any time later
+
+```JavaScript
+const optimizeImage = new OptimizeImage();
+
+optimizeImage.quality = 0.85;
+```
+
 ## Browser environment
 
 ```HTML
@@ -51,7 +75,7 @@ optimizeImage.install();
 
 ### Notes
 
-Note the version number in the jsdelivr URL: **0.0.18**. Don't forget to set desired version. You may check releases: https://github.com/sitelint/optimize-image-on-the-client-side/releases
+Note the version number in the jsdelivr URL: **0.0.29**. Don't forget to set desired version. You may check releases: https://github.com/sitelint/optimize-image-on-the-client-side/releases
 
 Worth to mention that [jsdelivr](https://www.jsdelivr.com) suggests:
 

@@ -12,6 +12,8 @@ export class OptimizeImage {
   private processedEvent: boolean;
   private busyElementId: string;
 
+  public quality: number;
+
   constructor() {
     this.inputTypeFileHandlerReference = null;
     this.customInputElements = null;
@@ -20,6 +22,7 @@ export class OptimizeImage {
     this.timeoutId = undefined;
     this.processedEvent = false;
     this.busyElementId = 'sl_busy_indicator';
+    this.quality = 0.75;
   }
 
   private createCSS(): void {
@@ -150,7 +153,7 @@ export class OptimizeImage {
 
     const dataTransfer: DataTransfer = new DataTransfer();
     const defaultCompressOptions: ICanvasCompressOptions = {
-      quality: 0.75,
+      quality: this.quality,
       type: 'image/jpeg'
     };
 
@@ -236,8 +239,9 @@ export class OptimizeImage {
     document.removeEventListener('change', this.inputTypeFileHandlerReference);
   }
 
-  public install(cssQuerySelector?: string | undefined, onCompressionDoneCallback?: Function): void {
+  public install(cssQuerySelector?: string | undefined, onCompressionDoneCallback?: Function, quality: number = 0.75): void {
     this.inputTypeFileHandlerReference = this.handleChangeEvent.bind(this);
+    this.quality = quality;
 
     this.onCompressionDoneCallback = onCompressionDoneCallback;
 
