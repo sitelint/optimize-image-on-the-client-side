@@ -12,6 +12,7 @@ declare class OptimizeImage {
     private enableBusyIndicator;
     private disableBusyIndicator;
     private compressImage;
+    private redispatchEvent;
     private processImages;
     private handleChangeEvent;
     addImageOptimization(cssQuerySelector: string): void;

@@ -121,10 +121,31 @@ export class OptimizeImage {
     });
   }
 
+  private redispatchEvent(event: Event, target: HTMLInputElement): void {
+    target.disabled = false;
+
+    // Uncaught (in promise) DOMException: Failed to execute 'dispatchEvent' on 'EventTarget': The event is already being dispatched.
+    try {
+      target.dispatchEvent(event);
+    } catch (e) {
+      // silence
+    }
+
+    this.processedEvent = false;
+  }
+
   private async processImages(event: Event, target: HTMLInputElement): Promise<void> {
+    if (typeof target.files === 'undefined') {
+      this.redispatchEvent(event, target);
+
+      return;
+    }
+
     const files: FileList | null = target.files;
 
     if (files === null || files.length === 0) {
+      this.redispatchEvent(event, target);
+
       return;
     }
 
@@ -191,16 +212,7 @@ export class OptimizeImage {
       this.onCompressionDoneCallback(files, dataTransfer.files);
     }
 
-    target.disabled = false;
-
-    // Uncaught (in promise) DOMException: Failed to execute 'dispatchEvent' on 'EventTarget': The event is already being dispatched.
-    try {
-      target.dispatchEvent(event);
-    } catch (e) {
-      // silence
-    }
-
-    this.processedEvent = false;
+    this.redispatchEvent(event, target);
   }
 
   private handleChangeEvent(event: Event): void {
