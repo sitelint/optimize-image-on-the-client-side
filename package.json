@@ -2,7 +2,7 @@
   "name": "@sitelintcode/optimize-image-on-the-client-side",
   "description": "Optimize image on the client side",
   "author": "Cezary Tomczyk <cezary.tomczyk@gmail.com> (https://www.sitelint.com/)",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "license": "MOZILLA PUBLIC LICENSE, VERSION 2.0",
   "node": ">=16",
   "main": "dist/optimize-image-on-the-client-side.js",
