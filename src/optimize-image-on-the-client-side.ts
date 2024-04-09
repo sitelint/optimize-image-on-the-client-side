@@ -226,7 +226,7 @@ export class OptimizeImage {
       return;
     }
 
-    if (target.nodeName.toLowerCase() === 'input' && target.type !== 'file') {
+    if (target.nodeName.toLowerCase() !== 'input' || target.type !== 'file') {
       return;
     }
 
