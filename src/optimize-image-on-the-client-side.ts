@@ -218,7 +218,15 @@ export class OptimizeImage {
   private handleChangeEvent(event: Event): void {
     const target: HTMLInputElement | null = event.target as HTMLInputElement;
 
-    if (this.processedEvent || target === null || (target.nodeName.toLowerCase() === 'input' && target.type !== 'file' && event.type !== 'change')) {
+    if (this.processedEvent || target === null) {
+      return;
+    }
+
+    if (event.type !== 'change') {
+      return;
+    }
+
+    if (target.nodeName.toLowerCase() === 'input' && target.type !== 'file') {
       return;
     }
 
