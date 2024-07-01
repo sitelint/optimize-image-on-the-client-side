@@ -64,7 +64,7 @@ optimizeImage.quality = 0.85;
 ## Browser environment
 
 ```HTML
-<script src="https://cdn.jsdelivr.net/npm/@sitelintcode/optimize-image-on-the-client-side@0.0.18/dist/optimize-image-on-the-client-side.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@sitelintcode/optimize-image-on-the-client-side@0.0.39/dist/optimize-image-on-the-client-side.js"></script>
 <script>
 (function() {
   const optimizeImage = new window.sitelint.OptimizeImage();
@@ -75,7 +75,7 @@ optimizeImage.quality = 0.85;
 
 ### Notes
 
-Note the version number in the jsdelivr URL: **0.0.29**. Don't forget to set desired version. You may check releases: https://github.com/sitelint/optimize-image-on-the-client-side/releases
+Note the version number in the jsdelivr URL: **0.0.39**. Don't forget to set desired version. You may check releases: https://github.com/sitelint/optimize-image-on-the-client-side/releases
 
 Worth to mention that [jsdelivr](https://www.jsdelivr.com) suggests:
 
