@@ -124,12 +124,9 @@ export class OptimizeImage {
   private redispatchEvent(event: Event, target: HTMLInputElement): void {
     target.disabled = false;
 
-    // Uncaught (in promise) DOMException: Failed to execute 'dispatchEvent' on 'EventTarget': The event is already being dispatched.
-    try {
-      target.dispatchEvent(event);
-    } catch (e) {
-      // silence
-    }
+    const newEvent: Event = new Event(event.type, event);
+
+    target.parentNode?.dispatchEvent(newEvent);
 
     this.processedEvent = false;
   }
