@@ -124,7 +124,20 @@ export class OptimizeImage {
   private redispatchEvent(event: Event, target: HTMLInputElement): void {
     target.disabled = false;
 
-    const newEvent: Event = new Event(event.type, event);
+    const newEvent: CustomEvent<unknown> = new CustomEvent(event.type, {
+      bubbles: event.bubbles,
+      cancelable: event.cancelable,
+      composed: event.composed,
+      currentTarget: event.currentTarget,
+      defaultPrevented: event.defaultPrevented,
+      eventPhase: event.eventPhase,
+      isTrusted: event.isTrusted,
+      returnValue: event.returnValue,
+      srcElement: event.srcElement,
+      target: event.target,
+      timeStamp: event.timeStamp,
+      type: event.type
+    } as Partial<Event>);
 
     target.parentNode?.dispatchEvent(newEvent);
 
