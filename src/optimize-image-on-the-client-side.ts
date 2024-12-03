@@ -147,11 +147,7 @@ export class OptimizeImage {
     } else {
       const newEvent = $.Event(event.type, eventProperties);
 
-      if (target.parentNode) {
-        $(target.parentNode).trigger(newEvent);
-      } else {
-        $(target).trigger(newEvent);
-      }
+      $(target).trigger(newEvent);
     }
 
     this.processedEvent = false;
