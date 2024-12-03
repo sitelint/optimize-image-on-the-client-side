@@ -52,6 +52,7 @@
   "devDependencies": {
     "@alex_neo/jest-expect-message": "1.0.5",
     "@types/jest": "29.5.14",
+    "@types/jquery": "3.5.32",
     "@types/jsdom": "21.1.7",
     "@types/node": "22.10.1",
     "@types/sharp": "0.32.0",

@@ -1,6 +1,7 @@
 import '@ungap/global-this';
+import 'jquery';
 
-import { ICanvasCompressOptions } from './interfaces/optimize-image-on-the-client-side.interfaces';
+import type { ICanvasCompressOptions } from './interfaces/optimize-image-on-the-client-side.interfaces';
 import { CommonUtilities } from './utilities/common.utilities';
 
 export class OptimizeImage {
@@ -106,7 +107,7 @@ export class OptimizeImage {
 
     try {
       blob = await new Promise((resolve: BlobCallback): void => {
-        return canvas.toBlob(resolve, type, quality);
+        canvas.toBlob(resolve, type, quality);
       });
     } catch (e) {
       return Promise.resolve(null);
@@ -124,7 +125,7 @@ export class OptimizeImage {
   private redispatchEvent(event: Event, target: HTMLInputElement): void {
     target.disabled = false;
 
-    const newEvent: CustomEvent<unknown> = new CustomEvent(event.type, {
+    const eventProperties: Partial<Event> = {
       bubbles: event.bubbles,
       cancelable: event.cancelable,
       composed: event.composed,
@@ -137,9 +138,21 @@ export class OptimizeImage {
       target: event.target,
       timeStamp: event.timeStamp,
       type: event.type
-    } as Partial<Event>);
+    };
 
-    target.parentNode?.dispatchEvent(newEvent);
+    if (typeof jQuery === 'undefined') {
+      const newEvent: CustomEvent<unknown> = new CustomEvent(event.type, eventProperties);
+
+      target.parentNode?.dispatchEvent(newEvent);
+    } else {
+      const newEvent = $.Event(event.type, eventProperties);
+
+      if (target.parentNode) {
+        $(target.parentNode).trigger(newEvent);
+      } else {
+        $(target).trigger(newEvent);
+      }
+    }
 
     this.processedEvent = false;
   }
@@ -210,7 +223,7 @@ export class OptimizeImage {
       }
     };
 
-    for (let i: number = 0, totalFiles: number = files.length; i < totalFiles; i += 1) {
+    for (let i = 0, totalFiles: number = files.length; i < totalFiles; i += 1) {
       await processFile(files[i]);
     }
 
@@ -269,7 +282,7 @@ export class OptimizeImage {
     document.removeEventListener('change', this.inputTypeFileHandlerReference);
   }
 
-  public install(cssQuerySelector?: string | undefined, onCompressionDoneCallback?: Function, quality: number = 0.75): void {
+  public install(cssQuerySelector?: string | undefined, onCompressionDoneCallback?: Function, quality = 0.75): void {
     this.inputTypeFileHandlerReference = this.handleChangeEvent.bind(this);
     this.quality = quality;
 
