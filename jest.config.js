@@ -1,13 +1,13 @@
-const path = require('path');
+const path = require('node:path');
 
 module.exports = {
   collectCoverageFrom: [
     'src/**/*.{js,ts}',
     '!src/**/interfaces/*.{js,ts}',
-    '!src/declarations.d.ts'
+    '!src/global.d.ts'
   ],
   coverageDirectory: '<rootDir>/.jest/coverage',
-  maxConcurrency: require('os').cpus().length,
+  maxConcurrency: require('node:os').cpus().length,
   moduleDirectories: [
     'node_modules',
     path.join(__dirname, 'src')

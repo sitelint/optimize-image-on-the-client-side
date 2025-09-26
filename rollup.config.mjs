@@ -1,15 +1,16 @@
 /* eslint-disable no-process-env */
-import path from 'path';
-import { fileURLToPath } from 'url';
 
-import typescript from 'rollup-plugin-typescript2';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+import commonjs from '@rollup/plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
+import dts from 'rollup-plugin-dts';
 import html from 'rollup-plugin-html';
 import json from 'rollup-plugin-json';
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
 import { terser } from 'rollup-plugin-minification';
+import typescript from 'rollup-plugin-typescript2';
 import { visualizer } from 'rollup-plugin-visualizer';
-import dts from 'rollup-plugin-dts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

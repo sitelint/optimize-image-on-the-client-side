@@ -1,10 +1,10 @@
 import { OptimizeImage } from './optimize-image-on-the-client-side';
 
 describe('OptimizeImage', () => {
-  let htmlToSpeech: OptimizeImage;
+  let optimizeImage: OptimizeImage;
 
   beforeEach(() => {
-    htmlToSpeech = new OptimizeImage();
+    optimizeImage = new OptimizeImage();
   });
 
   it('should determine the instance', () => {

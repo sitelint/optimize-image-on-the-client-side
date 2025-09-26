@@ -7,7 +7,7 @@ import { CommonUtilities } from './utilities/common.utilities';
 export class OptimizeImage {
   private inputTypeFileHandlerReference: ((event: Event) => void) | null;
   private customInputElements: Element[] | null;
-  private onCompressionDoneCallback: Function | undefined;
+  private onCompressionDoneCallback: ((originalFiles: FileList | null, compressedFiles: FileList) => void) | undefined;
   private originalCursor: string | undefined;
   private timeoutId: number | undefined;
   private processedEvent: boolean;
@@ -86,7 +86,7 @@ export class OptimizeImage {
 
     try {
       imageBitmap = await globalThis.createImageBitmap(file);
-    } catch (e) {
+    } catch (_) {
       return Promise.resolve(null);
     }
 
@@ -109,7 +109,7 @@ export class OptimizeImage {
       blob = await new Promise((resolve: BlobCallback): void => {
         canvas.toBlob(resolve, type, quality);
       });
-    } catch (e) {
+    } catch (_) {
       return Promise.resolve(null);
     }
 
@@ -122,8 +122,10 @@ export class OptimizeImage {
     });
   }
 
-  private redispatchEvent(event: Event, target: HTMLInputElement): void {
-    target.disabled = false;
+  private redispatchEvent(event: Event, target: EventTarget): void {
+    const eventTarget: HTMLInputElement = target as HTMLInputElement;
+
+    eventTarget.disabled = false;
 
     const eventProperties: Partial<Event> = {
       bubbles: event.bubbles,
@@ -143,7 +145,7 @@ export class OptimizeImage {
     if (typeof jQuery === 'undefined') {
       const newEvent: CustomEvent<unknown> = new CustomEvent(event.type, eventProperties);
 
-      target.parentNode?.dispatchEvent(newEvent);
+      eventTarget.parentNode?.dispatchEvent(newEvent);
     } else {
       const newEvent = $.Event(event.type, eventProperties);
 
@@ -153,17 +155,19 @@ export class OptimizeImage {
     this.processedEvent = false;
   }
 
-  private async processImages(event: Event, target: HTMLInputElement): Promise<void> {
-    if (typeof target.files === 'undefined') {
-      this.redispatchEvent(event, target);
+  private async processImages(event: Event, target: EventTarget): Promise<void> {
+    const eventTarget: HTMLInputElement = target as HTMLInputElement;
+
+    if (typeof eventTarget.files === 'undefined') {
+      this.redispatchEvent(event, eventTarget);
 
       return;
     }
 
-    const files: FileList | null = target.files;
+    const files: FileList | null = eventTarget.files;
 
     if (files === null || files.length === 0) {
-      this.redispatchEvent(event, target);
+      this.redispatchEvent(event, eventTarget);
 
       return;
     }
@@ -234,6 +238,34 @@ export class OptimizeImage {
     this.redispatchEvent(event, target);
   }
 
+  private handlejQueryChangeEvent(event: JQuery.TriggeredEvent): void {
+    const originalEvent: Event | undefined = event.originalEvent;
+
+    if (typeof originalEvent === 'undefined' || originalEvent.target === null) {
+      return;
+    }
+
+    const target: JQuery<EventTarget> = $(originalEvent.target);
+
+    if (this.processedEvent || !target.is('input[type="file"]')) {
+      return;
+    }
+
+    if (event.type !== 'change') {
+      return;
+    }
+
+    if (event.eventPhase === 1) {
+      this.processedEvent = true;
+    }
+
+    event.stopPropagation();
+
+    target.prop('disabled', true);
+
+    this.processImages(originalEvent, target[0]);
+  }
+
   private handleChangeEvent(event: Event): void {
     const target: HTMLInputElement | null = event.target as HTMLInputElement;
 
@@ -278,7 +310,7 @@ export class OptimizeImage {
     document.removeEventListener('change', this.inputTypeFileHandlerReference);
   }
 
-  public install(cssQuerySelector?: string | undefined, onCompressionDoneCallback?: Function, quality = 0.75): void {
+  public install(cssQuerySelector?: string | undefined, onCompressionDoneCallback?: ((originalFiles: FileList | null, compressedFiles: FileList) => void), quality = 0.75): void {
     this.inputTypeFileHandlerReference = this.handleChangeEvent.bind(this);
     this.quality = quality;
 
@@ -288,7 +320,11 @@ export class OptimizeImage {
       capture: true
     };
 
-    document.addEventListener('change', this.inputTypeFileHandlerReference, addEventListenerOptions);
+    if ((window as typeof globalThis & { jQuery?: JQueryStatic }).jQuery) {
+      $(document).on('change', this.handlejQueryChangeEvent.bind(this));
+    } else {
+      document.addEventListener('change', this.inputTypeFileHandlerReference, addEventListenerOptions);
+    }
 
     this.createCSS();
 
