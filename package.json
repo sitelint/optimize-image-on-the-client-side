@@ -37,7 +37,7 @@
     "test:coverage": "node --no-warnings --import tsx --import ./.test-helpers/setup.ts --test --experimental-test-coverage --test-coverage-exclude=\".test-helpers/**\" \"src/**/*.test.ts\"",
     "watch:dev": "chokidar \"./src/**/*.ts\" -c \"npm run build:dev && echo 'Build completed'\"",
     "watch:prod": "chokidar \"./src/**/*.ts\" -c \"npm run build:prod && echo 'Build completed'\"",
-    "release": "release-it"
+    "release": "release-it --config release-it.json"
   },
   "publishConfig": {
     "access": "public"
