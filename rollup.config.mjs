@@ -5,27 +5,13 @@ import { fileURLToPath } from 'node:url';
 
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
-import dts from 'rollup-plugin-dts';
+import esbuild from 'rollup-plugin-esbuild';
 import html from 'rollup-plugin-html';
 import json from 'rollup-plugin-json';
-import { terser } from 'rollup-plugin-minification';
-import typescript from 'rollup-plugin-typescript2';
 import { visualizer } from 'rollup-plugin-visualizer';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-const defaults = {
-  compilerOptions: {
-    declaration: true
-  }
-};
-const override = {
-  compilerOptions: {
-    declaration: false,
-    module: 'es6'
-  }
-};
 
 const config = {
   input: 'src/optimize-image-on-the-client-side.ts',
@@ -60,34 +46,14 @@ const config = {
     resolve({
       preferBuiltins: true
     }),
-    typescript({
-      clean: process.env.BUILD === 'development' || false,
-      declaration: true,
-      exclude: ['*.test*', '**/*.test*', '*.spec*', '**/*.spec*'],
-      objectHashIgnoreUnknownHack: false,
-      tsconfig: path.join(__dirname, 'tsconfig.json'),
-      tsconfigDefaults: defaults,
-      tsconfigOverride: override
+    esbuild({
+      minify: process.env.BUILD === 'production',
+      target: 'esnext',
+      tsconfig: path.join(__dirname, 'tsconfig.json')
     }),
     json()
   ]
 };
-
-const tsDeclarationsConfig = {
-  input: './src/optimize-image-on-the-client-side.ts',
-  output: [{
-    file: 'dist/optimize-image-on-the-client-side.d.ts',
-    format: 'es'
-  }],
-  plugins: [
-    dts()
-  ]
-};
-
-if (process.env.BUILD === 'production') {
-  // minifies generated bundles
-  config.plugins.push(terser());
-}
 
 if (process.env.BUILD === 'development') {
   config.plugins.push(visualizer({
@@ -95,4 +61,4 @@ if (process.env.BUILD === 'development') {
   }));
 }
 
-export default [config, tsDeclarationsConfig];
+export default config;

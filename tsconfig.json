@@ -2,7 +2,6 @@
   "compileOnSave": false,
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
     "declaration": true,
     "declarationDir": "dist/",
     "esModuleInterop": true,
@@ -14,14 +13,15 @@
       "ESNext"
     ],
     "mapRoot": "./dist",
-    "module": "CommonJS",
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "./dist",
     "preserveConstEnums": true,
     "removeComments": true,
     "resolveJsonModule": true,
+    "rootDir": "src",
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
@@ -39,7 +39,9 @@
   ],
   "exclude": [
     "node_modules",
+    ".test-helpers",
     "**/*.spec.ts",
+    "**/*.test.ts",
     "dist"
   ]
 }

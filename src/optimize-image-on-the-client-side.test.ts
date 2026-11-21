@@ -1,16 +1,12 @@
+import assert from 'node:assert/strict';
+import { describe, it } from 'node:test';
+
 import { OptimizeImage } from './optimize-image-on-the-client-side';
 
 describe('OptimizeImage', () => {
-  let optimizeImage: OptimizeImage;
-
-  beforeEach(() => {
-    optimizeImage = new OptimizeImage();
-  });
-
   it('should determine the instance', () => {
     const instance: OptimizeImage = new OptimizeImage();
 
-    expect(instance).toBeDefined();
+    assert.ok(instance);
   });
-
 });

@@ -1,4 +1,6 @@
-declare class OptimizeImage {
+import '@ungap/global-this';
+import 'jquery';
+export declare class OptimizeImage {
     private inputTypeFileHandlerReference;
     private customInputElements;
     private onCompressionDoneCallback;
@@ -20,5 +22,3 @@ declare class OptimizeImage {
     uninstall(): void;
     install(cssQuerySelector?: string | undefined, onCompressionDoneCallback?: ((originalFiles: FileList | null, compressedFiles: FileList) => void), quality?: number): void;
 }
-
-export { OptimizeImage };
